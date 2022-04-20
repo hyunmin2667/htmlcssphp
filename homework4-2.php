@@ -11,30 +11,30 @@
 // define variables and set to empty values
 $nErr = "";
 $n = "";
-$sum = 0;
-$prod = 1;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-  }
   if (empty($_POST["n"])) {
     $nErr = "n is required";
   } else {
     $n = test_input($_POST["n"]);
-    // check if name only contains letters and whitespace
-    if (is_int($n)) {
+    // check if name only number
+    if (!is_numeric($n)) {
       $nErr = "Only numbers allowed";
     }
+    elseif ($n < 10 | $n > 100) {
+      $nErr = "Enter a number greater than 10 and less than 100";
+    }
   }
-  
+}
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 ?>
 
-<h2>PHP Sum&factorial of your input number</h2>
+<h2>PHP Sorting</h2>
 <p><span class="error">* required field</span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
   N: <input type="text" name="n" value="<?php echo $n;?>">
@@ -44,58 +44,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </form>
 
 <?php
-echo "<h2>Your Input:</h2>";
-  for($i=1;$i<=$n;$i++) {
-    $sum += $i;
-    $prod *= $i;
+
+  echo "<h2>Your Input : ", $n, "</h2>";
+  if(10 <= $n & $n <= 100) {
+    for($i=0;$i<$n;$i++) {
+      $dada[$i]=rand();
+    }
+
+    echo "정수 랜덤넘버(",$n,"개) : ";
+    for($i=0;$i<$n;$i++) {
+      echo $dada[$i]," ";
+    }
+    sort($dada);
+    echo "<br>정렬된 넘버　(",$n,"개) : ";
+    for($i=0;$i<$n;$i++) {
+      echo $dada[$i]," ";
+    }
   }
-  echo "1부터 ",$n,"까지의 합과 곱<br>";
-  echo "합 : ", $sum,"<br>";
-  echo "곱 : ", $prod;
 ?>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
